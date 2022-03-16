@@ -1,7 +1,23 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  env: {
+    jest: true,
+    browser: true,
+    node: true,
+    es2021: true
+  },
+  globals: {
+    document: false
+  },
   extends: ['airbnb', 'prettier'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: ['@typescript-eslint'],
   rules: {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'react/react-in-jsx-scope': 'off',
@@ -10,22 +26,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error'],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    "import/no-unresolved": [2, { "caseSensitive": false }],
+    "import/no-unresolved": 'error',
     "react/function-component-definition": [2,{ namedComponents: "function-declaration"},]
   },
-  "parserOptions": {
-    "parser": "@typescript-eslint/parser",
-    "project": "./tsconfig.eslint.json",
-    "ecmaFeatures": {
-      "jsx": true
+  settings: {
+    'import/resolver': {
+      typescript: {}
     }
-  },
-  env: {
-    jest: true,
-    browser: true,
-    node: true
-  },
-  globals: {
-    document: false
   }
 };

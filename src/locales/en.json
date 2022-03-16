@@ -5,5 +5,6 @@
   "btn.prev": "Prev page",
   "btn.next": "Next page",
   "btn.backPage": "Go to results page",
-  "btn.readFull": "Read the full article"
+  "btn.readFull": "Read the full article",
+  "placeholder.text": "type here ..."
 }

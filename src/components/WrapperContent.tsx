@@ -4,9 +4,11 @@ import AppProvider from '../providers/AppProvider';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
-  margin: 2.5rem;
+  margin: 2.5rem auto;
   border: 1px solid #ccc;
   padding-bottom: 1rem;
+  width: 90%;
+  min-height: 88vh;
 `;
 
 type IPropType = {
