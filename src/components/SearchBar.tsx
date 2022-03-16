@@ -87,8 +87,19 @@ const searchBar = () => {
           <FormattedMessage id="title.searchBar" />:
         </StyledTitle>
         <StyledFormField>
-          <StyledInput type="text" ref={inputRef} id='search-input' onChange={handleChange} placeholder={intl.formatMessage({ id: 'placeholder.text' })} title={intl.formatMessage({ id: 'placeholder.text' })} />
-          <StyledButton type='button' onClick={handleClick} aria-label="Submit button">
+          <StyledInput 
+            type="text" 
+            ref={inputRef} 
+            id='search-input' 
+            onChange={handleChange} 
+            placeholder={intl.formatMessage({ id: 'placeholder.text' })} 
+            title={intl.formatMessage({ id: 'placeholder.text' })} 
+          />
+          <StyledButton 
+            type='button' 
+            onClick={handleClick} 
+            aria-label="Submit button"
+          >
             <img src={searchIcon} alt="search icon" width={20} height={20} />
           </StyledButton>
         </StyledFormField>
