@@ -27,6 +27,7 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     "import/no-unresolved": 'error',
+    "import/prefer-default-export": 'off',
     "react/function-component-definition": [2,{ namedComponents: "function-declaration"},]
   },
   settings: {

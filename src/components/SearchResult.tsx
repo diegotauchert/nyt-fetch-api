@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import SearchItem from './SearchItem';
+import { ArticleContext } from '../contexts/ArticleContext';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
 
 const StyledSearchResult = styled.div`
@@ -20,6 +21,9 @@ type ISearchResultProps = {
 }
 
 function SearchResult({articles}: ISearchResultProps) {
+
+  const { message } = useContext(ArticleContext);
+
   return (
     <StyledSearchResult>
       <div>
@@ -33,7 +37,7 @@ function SearchResult({articles}: ISearchResultProps) {
               <SearchItem key={item.id} item={item} />
             )) 
           : 
-            <StyledTitle>Loading ...</StyledTitle>
+            <StyledTitle>{message}</StyledTitle>
         }
       </div>
     </StyledSearchResult>

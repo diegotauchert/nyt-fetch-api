@@ -1,3 +1,4 @@
+/* eslint-disable default-param-last */
 /* eslint-disable no-async-promise-executor */
 import HttpClientFetch from '../core/HttpClientFetch';
 import { HttpClientInterface } from '../core/interfaces/HttpClientInterface';
@@ -16,8 +17,13 @@ export default class ArticleService {
 
   private apiKey = process.env.REACT_APP_API_KEY;
 
-  public async fetchArticles(): Promise<ArticleInterface[]> {
-    const url = `${this.baseUrl}/articlesearch.json?api-key=${this.apiKey}`;
+  public async fetchArticles(offset: number = 1, filter?: string): Promise<ArticleInterface[]> {
+    const fieldsReturned = 'abstract, _id';
+    let url = `${this.baseUrl}/articlesearch.json?page=${offset}&sort=newest&fl=${fieldsReturned}&api-key=${this.apiKey}`;
+
+    if(filter){
+      url += `&fq=${filter}`;
+    }
 
     const response = await this.http.get(url);
 

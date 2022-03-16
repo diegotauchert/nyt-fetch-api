@@ -1,15 +1,19 @@
 import React from 'react';
+import { Routes, Route } from "react-router-dom";
 import WrapperContent from './components/WrapperContent';
 import Header from './components/Header';
 import SearchContent from './components/SearchContent';
 
-const App: React.FC = () => {
+function App(){
   return (
     <WrapperContent>
       <Header />
-      <SearchContent />
+      <Routes>
+        <Route path="/" element={<SearchContent />} />
+        <Route path="/article" element={<div>Article</div>} />
+      </Routes>
     </WrapperContent>
-  );
+  )
 }
 
 export default App;

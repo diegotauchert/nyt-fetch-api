@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components';
+import { ArticleContext } from '../contexts/ArticleContext';
+import searchIcon from '../assets/search.svg';
 
 const StyledSearchBar = styled.div`
   margin-top: 2rem;
@@ -30,8 +32,53 @@ const StyledInput = styled.input`
   }
 `;
 
+const StyledFormField = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+const StyledButton = styled.button`
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+  z-index: 1;
+  opacity: 0.5;
+
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+  }
+`;
+
+const StyledError = styled.p`
+  margin-top: .5rem;
+  color: red;
+  font-weight: 700;
+  font-size:0.9rem
+`;
+
 const searchBar = () => {
   const intl = useIntl();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { search, searchApi } = useContext(ArticleContext);
+  const [warning, setWarning] = useState<boolean>(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    search(e.target.value);
+    setWarning(false);
+  }
+
+  const handleClick = () => {
+    if (inputRef.current!.value) {
+      searchApi(inputRef.current!.value);
+    }else{
+      setWarning(true)
+      inputRef.current!.focus()
+    }
+  }
 
   return (
     <StyledSearchBar>
@@ -39,7 +86,13 @@ const searchBar = () => {
         <StyledTitle htmlFor='search-input'>
           <FormattedMessage id="title.searchBar" />:
         </StyledTitle>
-        <StyledInput type="text" id='search-input' placeholder={intl.formatMessage({ id: 'placeholder.text' })} title={intl.formatMessage({ id: 'placeholder.text' })} />
+        <StyledFormField>
+          <StyledInput type="text" ref={inputRef} id='search-input' onChange={handleChange} placeholder={intl.formatMessage({ id: 'placeholder.text' })} title={intl.formatMessage({ id: 'placeholder.text' })} />
+          <StyledButton type='button' onClick={handleClick} aria-label="Submit button">
+            <img src={searchIcon} alt="search icon" width={20} height={20} />
+          </StyledButton>
+        </StyledFormField>
+        {warning && <StyledError><FormattedMessage id="error.required" /></StyledError>}
       </div>
     </StyledSearchBar>
   )

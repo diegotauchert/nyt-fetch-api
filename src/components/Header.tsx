@@ -15,7 +15,7 @@ const StyledTitle = styled.h1`
   font-family: 'Roboto', sans-serif;
 `;
 
-const Header = () => {
+function Header() {
   return (
     <StyledHeader color="black">
       <header>
