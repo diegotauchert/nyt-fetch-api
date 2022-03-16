@@ -17,6 +17,7 @@ export default function AppProvider({ children }: IAppProviderProps) {
   const [articlesFetch, setArticlesFetch] = useState<ArticleInterface[]>([] as ArticleInterface[]);
   const [articles, setArticles] = useState<ArticleInterface[]>([] as ArticleInterface[]);
   const [message, setMessage] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
 
   const fetchData = async (offset: number = 1, filter?:string) => {
     await ArticleServiceInstance.fetchArticles(offset, filter).then((res:ArticleInterface[]) => {
@@ -27,8 +28,8 @@ export default function AppProvider({ children }: IAppProviderProps) {
 
   useEffect(() => {
     setMessage('Loading...');
-    fetchData()
-  }, [])
+    fetchData(page)
+  }, [page])
 
   const search = (value: string) => {
     if(value){
@@ -45,12 +46,20 @@ export default function AppProvider({ children }: IAppProviderProps) {
   }
 
   const searchApi = (filter: string) => {
-    fetchData(1,filter)
+    fetchData(page, filter)
+  }
+
+  const handleClickPrev = () => {
+    setPage(el => el - 1)
+  }
+
+  const handleClickNext = () => {
+    setPage(el => el + 1)
   }
 
   return (
     <IntlProvider locale="en" messages={en}>
-      <ArticleContext.Provider value={{ articles, search, searchApi, message }}>
+      <ArticleContext.Provider value={{ articles, search, searchApi, message, handleClickPrev, handleClickNext, page }}>
         {children}
       </ArticleContext.Provider>
     </IntlProvider>

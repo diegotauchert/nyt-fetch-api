@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import WrapperContent from './components/WrapperContent';
 import Header from './components/Header';
 import SearchContent from './components/SearchContent';
+import ArticleRead from './components/ArticleRead';
 
 function App(){
   return (
@@ -10,7 +11,8 @@ function App(){
       <Header />
       <Routes>
         <Route path="/" element={<SearchContent />} />
-        <Route path="/article" element={<div>Article</div>} />
+        <Route path="/articles/:page" element={<SearchContent />} />
+        <Route path="/article/:title/:id" element={<ArticleRead />} />
       </Routes>
     </WrapperContent>
   )

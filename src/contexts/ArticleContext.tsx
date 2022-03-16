@@ -5,7 +5,10 @@ interface IArticleContext {
   articles: ArticleInterface[],
   search: Function,
   searchApi: Function,
-  message: string
+  message: string,
+  handleClickPrev: () => void,
+  handleClickNext: () => void,
+  page: number
 }
 
 export const ArticleContext = createContext<IArticleContext>({} as IArticleContext);

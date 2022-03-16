@@ -1,6 +1,8 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { useContext } from 'react';
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import { ArticleContext } from '../contexts/ArticleContext';
 
 const StyledDivButton = styled.div`
   display: flex;
@@ -16,17 +18,29 @@ const StyledButton = styled.button`
   text-decoration: underline;
   cursor: pointer;
   font-size: 1rem;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 `;
 
 function SearchPagination() {
+  const { handleClickPrev, handleClickNext, page } = useContext(ArticleContext)
+
   return (
     <StyledDivButton>
-      <StyledButton>
-        &lsaquo; <FormattedMessage id="btn.prev" />
-      </StyledButton>
-      <StyledButton>
-        <FormattedMessage id="btn.next" /> &rsaquo;
-      </StyledButton>
+      <Link to={`/articles/${Math.round(page-1) || 1}`}>
+        <StyledButton type='button' onClick={handleClickPrev} disabled={page === 1}>
+          &lsaquo; <FormattedMessage id="btn.prev" />
+        </StyledButton>
+      </Link>
+      
+      <Link to={`/articles/${page+1}`}>
+        <StyledButton type='button' onClick={handleClickNext}>
+          <FormattedMessage id="btn.next" /> &rsaquo;
+        </StyledButton>
+      </Link>
     </StyledDivButton>
   )
 }
