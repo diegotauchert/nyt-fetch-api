@@ -21,7 +21,6 @@ type ISearchResultProps = {
 }
 
 function SearchResult({articles}: ISearchResultProps) {
-
   const { message } = useContext(ArticleContext);
 
   return (
@@ -30,15 +29,18 @@ function SearchResult({articles}: ISearchResultProps) {
         <StyledTitle htmlFor='search-input'>
           <FormattedMessage id="title.result" />:
         </StyledTitle>
-        
-        {
-          articles && articles.length > 0 ? 
-            articles.map((item:ArticleInterface) => (
-              <SearchItem key={item.id} item={item} />
-            )) 
-          : 
-            <StyledTitle>{message}</StyledTitle>
-        }
+        <div role="feed">
+          {
+            articles && articles.length > 0 ? 
+              articles.map((item:ArticleInterface) => (
+                <div role="article" key={item.id}>
+                  <SearchItem item={item} />
+                </div>
+              )) 
+            : 
+              <StyledTitle>{message}</StyledTitle>
+          }
+        </div>
       </div>
     </StyledSearchResult>
   )

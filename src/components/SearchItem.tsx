@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { normalizeUrl, encodePipe } from '../helpers/normalizeUrl';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
 
-const StyledSearchResult = styled.div`
+const StyledSearchItem = styled.article`
   padding: 1.2rem;
   background-color: #F8F8F8;
   border: 1px solid #D1D1D1;
@@ -25,23 +25,25 @@ const StyledTitle = styled.p`
   gap: 0.75rem;
 `;
 
-type ISearchResultProps = {
+type ISearchItemProps = {
   item: ArticleInterface
 }
 
-function SearchResult({item}: ISearchResultProps) {
+function SearchItem({item}: ISearchItemProps) {
   return (
-    <Link to={`/article/${normalizeUrl(item.title)}/${encodePipe(item.id)}`} style={{textDecoration: 'none'}}>
-      <StyledSearchResult>
-        <div>
-            <StyledTitle>
-              <img src="/favicon.ico" alt="article icon" width={20} height={20} />
-              {item.title}
-            </StyledTitle>
-        </div>
-      </StyledSearchResult>
+    <Link 
+      to={`/article/${normalizeUrl(item.title)}/${encodePipe(item.id)}`} 
+      style={{textDecoration: 'none'}} 
+      role="article"
+    >
+      <StyledSearchItem>
+        <StyledTitle>
+          <img src="/favicon.ico" alt="article icon" width={20} height={20} />
+          {item.title}
+        </StyledTitle>
+      </StyledSearchItem>
     </Link>
   )
 }
     
-export default SearchResult;
+export default SearchItem;

@@ -1,11 +1,8 @@
 /* eslint-disable default-param-last */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useEffect, useState } from 'react';
-import { IntlProvider } from 'react-intl';
 import ArticleService from '../services/ArticleService';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
-
-import en from '../locales/en.json';
 import { ArticleContext } from '../contexts/ArticleContext';
 
 type IAppProviderProps = {
@@ -58,10 +55,8 @@ export default function AppProvider({ children }: IAppProviderProps) {
   }
 
   return (
-    <IntlProvider locale="en" messages={en}>
-      <ArticleContext.Provider value={{ articles, search, searchApi, message, handleClickPrev, handleClickNext, page }}>
-        {children}
-      </ArticleContext.Provider>
-    </IntlProvider>
+    <ArticleContext.Provider value={{ articles, search, searchApi, message, handleClickPrev, handleClickNext, page }}>
+      {children}
+    </ArticleContext.Provider>
   );
 }

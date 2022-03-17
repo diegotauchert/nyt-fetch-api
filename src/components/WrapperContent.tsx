@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
+import styled from 'styled-components';
 import GlobalStyle from '../assets/globalStyles';
 import AppProvider from '../providers/AppProvider';
-import styled from 'styled-components';
+import LocaleProvider from '../providers/LocaleProvider';
 
 const StyledWrapper = styled.div`
   margin: 2.5rem auto;
@@ -20,9 +21,11 @@ export default function WrapperContent({children}: IPropType) {
     <StyledWrapper>
       <GlobalStyle />
       
-      <AppProvider>
-        {children}
-      </AppProvider>
+      <LocaleProvider>
+        <AppProvider>
+          {children}
+        </AppProvider>
+      </LocaleProvider>
     </StyledWrapper>
   )
 }
