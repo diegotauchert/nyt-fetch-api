@@ -34,7 +34,6 @@ function SearchItem({item}: ISearchItemProps) {
     <Link 
       to={`/article/${normalizeUrl(item.title)}/${encodePipe(item.id)}`} 
       style={{textDecoration: 'none'}} 
-      role="article"
     >
       <StyledSearchItem>
         <StyledTitle>

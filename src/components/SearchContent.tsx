@@ -14,12 +14,12 @@ const StyledSearchContent = styled.div`
 
 function SearchContent() {
 
-  const { articles, divRef } = useContext(ArticleContext)
+  const { divRef } = useContext(ArticleContext)
 
   return (
     <StyledSearchContent ref={divRef}>
       <SearchBar />
-      <SearchResult articles={articles} />
+      <SearchResult />
       <SearchPagination />
     </StyledSearchContent>
   )

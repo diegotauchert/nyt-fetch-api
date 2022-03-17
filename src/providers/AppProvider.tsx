@@ -1,6 +1,5 @@
-/* eslint-disable default-param-last */
-/* eslint-disable react/jsx-no-constructed-context-values */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useIntl } from 'react-intl';
 import ArticleService from '../services/ArticleService';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
 import { ArticleContext } from '../contexts/ArticleContext';
@@ -9,24 +8,33 @@ type IAppProviderProps = {
   children: React.ReactNode;
 }
 
+const PAGE_DEFAULT = 1;
+
 export default function AppProvider({ children }: IAppProviderProps) {
   const ArticleServiceInstance = new ArticleService();
   const [articlesFetch, setArticlesFetch] = useState<ArticleInterface[]>([] as ArticleInterface[]);
   const [articles, setArticles] = useState<ArticleInterface[]>([] as ArticleInterface[]);
-  const [message, setMessage] = useState<string>('');
-  const [page, setPage] = useState<number>(1);
+  const [message, setMessage] = useState<string>('' as string);
+  const [page, setPage] = useState<number>(PAGE_DEFAULT);
   const divRef = useRef<null | HTMLDivElement>(null);
+  const intl = useIntl();
 
-  const fetchData = async (offset: number = 1, filter?:string) => {
+  const fetchData = useCallback(async (filter?:string, offset: number = 1) => {
     await ArticleServiceInstance.fetchArticles(offset, filter).then((res:ArticleInterface[]) => {
       setArticlesFetch(res)
       setArticles(res)
     }).finally(() => setMessage(''))
-  }
+  }, [])
 
   useEffect(() => {
-    setMessage('Loading...');
-    fetchData(page)
+    setMessage(intl.formatMessage({ id: 'text.loading' }));
+    fetchData('', page)
+
+    return () => {
+      setArticlesFetch([] as ArticleInterface[]);
+      setArticles([] as ArticleInterface[]);
+      setMessage('' as string)
+    }
   }, [page])
 
   const search = (value: string) => {
@@ -36,7 +44,7 @@ export default function AppProvider({ children }: IAppProviderProps) {
       setArticles(filteredArticles)
 
       if(filteredArticles.length === 0){
-        setMessage('No result found')
+        setMessage(intl.formatMessage({ id: 'text.resultNotFound' }))
       }
     } else {
       setArticles(articlesFetch)
@@ -44,11 +52,14 @@ export default function AppProvider({ children }: IAppProviderProps) {
   }
 
   const searchApi = (filter: string) => {
-    fetchData(page, filter)
+    fetchData(filter, page)
   }
 
   const scrollToTop = () => {
-    divRef.current!.scrollIntoView({ behavior: 'smooth' });
+    try{
+      divRef.current!.scrollIntoView({ behavior: 'smooth' });
+    // eslint-disable-next-line no-empty
+    }catch(e){}
   }
 
   const handleClickPrev = () => {
@@ -62,6 +73,7 @@ export default function AppProvider({ children }: IAppProviderProps) {
   }
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <ArticleContext.Provider value={{ articles, search, searchApi, message, handleClickPrev, handleClickNext, page, divRef }}>
       {children}
     </ArticleContext.Provider>

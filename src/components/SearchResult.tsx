@@ -1,9 +1,11 @@
 import React, { memo, useContext } from 'react';
 import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import SearchItem from './SearchItem';
 import { ArticleContext } from '../contexts/ArticleContext';
+import { ArticleContextInterface } from '../contexts/interfaces/ArticleContextInterface';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
+import Skeleton from './Skeleton';
 
 const StyledSearchResult = styled.div`
   margin-top: 2rem;
@@ -17,13 +19,10 @@ const StyledTitle = styled.label`
   justify-content: space-between;
 `;
 
-type ISearchResultProps = {
-  articles: ArticleInterface[]
-}
-
-function SearchResult({articles}: ISearchResultProps) {
-  const { message, page } = useContext(ArticleContext);
-
+function SearchResult() {
+  const { articles, page, message } = useContext<ArticleContextInterface>(ArticleContext);
+  const intl = useIntl();
+  
   return (
     <StyledSearchResult>
       <div>
@@ -35,12 +34,12 @@ function SearchResult({articles}: ISearchResultProps) {
           {
             articles && articles.length > 0 ? 
               articles.map((item:ArticleInterface) => (
-                <div role="article" key={item.id}>
-                  <SearchItem item={item} />
-                </div>
+                <SearchItem item={item} key={item.id} />
               )) 
             : 
-              <StyledTitle>{message}</StyledTitle>
+            <div>
+              { message !== intl.formatMessage({ id: 'text.loading' }) ? <strong>{message}</strong> : <Skeleton /> }
+            </div>
           }
         </div>
       </div>

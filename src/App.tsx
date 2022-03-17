@@ -5,17 +5,20 @@ import Header from './components/Header';
 
 const ArticleRead = lazy(() => import("./components/ArticleRead"));
 const SearchContent = lazy(() => import("./components/SearchContent"));
+const NotFound = lazy(() => import("./components/NotFound"));
 
 function App(){
   return (
     <WrapperContent>
       <Header />
-      <Routes>
-        <Route path="/" element={<Suspense fallback={<>...</>}><SearchContent /></Suspense>} />
-        <Route path="/articles/:page" element={<Suspense fallback={<>...</>}><SearchContent /></Suspense>} />
-        <Route path="/article/:title/:id" element={<Suspense fallback={<>...</>}><ArticleRead /></Suspense>} />
-        <Route path="*" element={<div>Page not found</div>} />
-      </Routes>
+      <Suspense fallback={<>...</>}>
+        <Routes>
+          <Route path="/" element={<SearchContent />} />
+          <Route path="/articles/:page" element={<SearchContent />} />
+          <Route path="/article/:title/:id" element={<ArticleRead />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </WrapperContent>
   )
 }

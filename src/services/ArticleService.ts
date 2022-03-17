@@ -24,7 +24,7 @@ export default class ArticleService {
     if(filter){
       url += `&fq=${filter}`;
     }
-
+    
     const response = await this.http.get(url);
 
     return new Promise<ArticleInterface[]>(async (resolve, reject) => {
@@ -42,7 +42,7 @@ export default class ArticleService {
   public async getSingleArticle(id: string): Promise<ArticleInterface> {
     const fieldsReturned = 'abstract, _id, web_url, pub_date, lead_paragraph';
     const url = `${this.baseUrl}/articlesearch.json?fq=_id:"${id}"&fl=${fieldsReturned}&api-key=${this.apiKey}`;
-
+    
     const response = await this.http.get(url);
 
     return new Promise<ArticleInterface>(async (resolve, reject) => {
