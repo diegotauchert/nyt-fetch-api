@@ -1,4 +1,4 @@
-# React Coding Challenge
+# The New York Times API fetch with React
 
 The task is about implementing an article search application using The New York Times (NYT) public API.
 
@@ -6,10 +6,6 @@ It should have:
 
     - A main screen, where a user can search for articles, and view search results;
     - A detailed article view screen;
-
-Full Read:
-
-[https://developers.grover.com/frontend-task/](https://developers.grover.com/frontend-task/)
 
 ### User flow
 
@@ -52,3 +48,7 @@ Launches the test runner in the interactive watch mode.\
 - Install `eslint` extension
 - Install `prettier` extension
 - Restart the IDE
+
+Full Read:
+
+[https://developers.grover.com/frontend-task/](https://developers.grover.com/frontend-task/)

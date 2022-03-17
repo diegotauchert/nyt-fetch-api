@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { normalizeUrl, encodePipe } from '../helpers/normalizeUrl';
+import { normalizeUrl, encodePipe } from '../helpers/utils';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
 
 const StyledSearchItem = styled.article`

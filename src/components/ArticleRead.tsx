@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
-import { decodePipe } from '../helpers/normalizeUrl';
+import { decodePipe } from '../helpers/utils';
 import ArticleService from '../services/ArticleService';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
 

@@ -1,6 +1,6 @@
 /* eslint-disable default-param-last */
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ArticleService from '../services/ArticleService';
 import { ArticleInterface } from '../interfaces/ArticleInterface';
 import { ArticleContext } from '../contexts/ArticleContext';
@@ -15,6 +15,7 @@ export default function AppProvider({ children }: IAppProviderProps) {
   const [articles, setArticles] = useState<ArticleInterface[]>([] as ArticleInterface[]);
   const [message, setMessage] = useState<string>('');
   const [page, setPage] = useState<number>(1);
+  const divRef = useRef<null | HTMLDivElement>(null);
 
   const fetchData = async (offset: number = 1, filter?:string) => {
     await ArticleServiceInstance.fetchArticles(offset, filter).then((res:ArticleInterface[]) => {
@@ -46,16 +47,22 @@ export default function AppProvider({ children }: IAppProviderProps) {
     fetchData(page, filter)
   }
 
+  const scrollToTop = () => {
+    divRef.current!.scrollIntoView({ behavior: 'smooth' });
+  }
+
   const handleClickPrev = () => {
     setPage(el => el - 1)
+    scrollToTop()
   }
 
   const handleClickNext = () => {
     setPage(el => el + 1)
+    scrollToTop()
   }
 
   return (
-    <ArticleContext.Provider value={{ articles, search, searchApi, message, handleClickPrev, handleClickNext, page }}>
+    <ArticleContext.Provider value={{ articles, search, searchApi, message, handleClickPrev, handleClickNext, page, divRef }}>
       {children}
     </ArticleContext.Provider>
   );

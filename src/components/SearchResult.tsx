@@ -13,7 +13,8 @@ const StyledTitle = styled.label`
   font-size: 0.9rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  display: block;
+  display: flex;
+  justify-content: space-between;
 `;
 
 type ISearchResultProps = {
@@ -21,13 +22,14 @@ type ISearchResultProps = {
 }
 
 function SearchResult({articles}: ISearchResultProps) {
-  const { message } = useContext(ArticleContext);
+  const { message, page } = useContext(ArticleContext);
 
   return (
     <StyledSearchResult>
       <div>
         <StyledTitle htmlFor='search-input'>
           <FormattedMessage id="title.result" />:
+          <small>Page: {page}</small>
         </StyledTitle>
         <div role="feed">
           {
