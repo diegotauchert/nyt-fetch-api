@@ -21,11 +21,17 @@ It should have:
 $ git clone https://github.com/diegotauchert/nyt-fetch-api.git
 ```
 
-PS: you need to install 'Node.js' and 'Npm' or 'Yarn' to run this project.
+### `Docker`
 
-### ` Tested on node.js v16.14.0 `
+run `make deploy_dev` to deploy the app to a local Docker container.
 
-Second, after download the repo, you need to install the React dependencies.
+then, run `make start` to run the app in the container.
+
+### `Node`
+
+### ` Tested only on node.js v16.14.0 `
+
+Run the command below to install the dependencies.
 
 ### `yarn install`
 
